@@ -557,14 +557,14 @@ function animate() {
     s.g.attributes.position.needsUpdate = true;
   }
 
-  // ---- camera: dive deep through the tube into the web, then ease back to reveal it ----
-  const diveZ = isWorm ? disp * 4.4 : 0;     // seg 4: fly deep through the tunnel, then back
-  const targetZ = BASE_Z - disp * 1.5 - diveZ;
+  // ---- camera: same gentle ease on every transition. NO deep dive on the wormhole —
+  // diving past z=0 made lookAt flip and you saw the tube from outside (the stutter).
+  // Staying at +z keeps us INSIDE the loophole, always looking forward into it.
+  const targetZ = BASE_Z - disp * 1.5;
   camZ += (targetZ - camZ) * 0.05;
   camera.position.z = camZ;
   if (isWorm) {
-    // Lock to the centre line + look straight down the axis → no sliding out the side,
-    // no "turn to the right" (both came from the pointer steering the camera here).
+    // Lock to the centre line so the tube stays around us — never seen from the side.
     camera.position.x += (0 - camera.position.x) * 0.06;
     camera.position.y += (0 - camera.position.y) * 0.06;
   } else {
