@@ -476,10 +476,12 @@ function animate() {
   const isWorm = (seg === 4);                // wormhole -> cosmic web segment
   const disp = Math.sin(Math.PI * morphT);   // 0 while resting, 1 mid-transition
   const disp2 = disp * disp;
-  // Wormhole: keep the tube perfectly intact while we fly through it, then let the
-  // cosmic web form only in the final stretch (no half-dissolved tube mid-flight).
-  const e = isWorm ? easeInOut(smoothstep(0.55, 1.0, morphT)) : easeInOut(morphT);
+  const e = easeInOut(morphT);               // one continuous morph (no snapping)
   const spreadAmt = isWorm ? 0.0 : SPREAD;   // no outward chaos inside the tunnel
+  // Wormhole: build the cosmic web FAR down the tube (z = -10), so flying forward
+  // carries us straight into it — one monotonic motion, no diving past then reversing.
+  const WEB_Z = -10.0;
+  const webOff = isWorm ? WEB_Z : 0.0;
 
   const pos = geo.attributes.position.array;
   for (let i = 0; i < COUNT; i++) {
@@ -487,7 +489,7 @@ function animate() {
     // base interpolation between shapes
     let x = A[ix] + (B[ix] - A[ix]) * e;
     let y = A[iy] + (B[iy] - A[iy]) * e;
-    let z = A[iz] + (B[iz] - A[iz]) * e;
+    let z = A[iz] + (B[iz] + webOff - A[iz]) * e;
     // gentle outward drift at mid-transition (smooth, not violent)
     const s = seeds[i];
     const swirl = disp * spreadAmt * (0.8 + 0.2 * Math.sin(s + time * 0.6));
@@ -512,10 +514,12 @@ function animate() {
   mo.rx += (m.rx * settle - mo.rx) * 0.025;
   spin += m.spin * settle * dt;            // slow spin, only while settled
 
-  // figure drifts gently sideways as it dissolves on scroll (but travel straight through the wormhole)
+  // figure drifts gently sideways as it dissolves on scroll — but the whole wormhole
+  // approach (forming the tube AND flying through it) stays dead-centred, no slide.
   const dir = (seg % 2 === 0) ? 1 : -1;
-  const slideX = (seg === 4) ? 0 : disp * 0.9 * dir;
-  const slideY = (seg === 4) ? 0 : disp * 0.28 * ((seg % 2 === 0) ? -1 : 1);
+  const noSlide = (seg === 3 || seg === 4);
+  const slideX = noSlide ? 0 : disp * 0.9 * dir;
+  const slideY = noSlide ? 0 : disp * 0.28 * ((seg % 2 === 0) ? -1 : 1);
 
   if (isWorm) {
     // Lock the tunnel dead-centred and axis-aligned so the camera stays INSIDE it
@@ -560,17 +564,16 @@ function animate() {
 
   // ---- camera: ease into the figure as it dissolves; fly THROUGH the wormhole ----
   if (isWorm) {
-    // Pull the camera straight down the tube and out the far end, looking FORWARD
-    // along the axis the whole time (never lookAt origin → never flips to a side view).
-    // The cosmic web then assembles ahead of us as we ease back out.
-    const dive = Math.sin(Math.PI * morphT);        // 0 → 1 → 0 across the segment
-    const targetZ = BASE_Z - dive * 8.5;            // deep travel through the tunnel
+    // One smooth forward glide through the tube. The web sits at z = -10 and the camera
+    // stays a constant 5.4 in front of it the whole way → steady framing, no reversal,
+    // never slides out the side. (BASE_Z - 10k) - (-10k) = BASE_Z, always looking forward.
+    const k = easeInOut(morphT);                    // 0 → 1 monotonic
+    const targetZ = BASE_Z + WEB_Z * k;             // 5.4 → -4.6: travel straight through
     camZ += (targetZ - camZ) * 0.06;
     camera.position.z = camZ;
-    // hard-lock to the tube's centre line — this kills the old "turn to the right"
-    camera.position.x += (0 - camera.position.x) * 0.1;
+    camera.position.x += (0 - camera.position.x) * 0.1;   // hard-lock to the centre line
     camera.position.y += (0 - camera.position.y) * 0.1;
-    camera.lookAt(0, 0, camZ - 6);                  // always gaze forward down the throat
+    camera.lookAt(0, 0, WEB_Z * k);                 // keep the forming web framed dead ahead
   } else {
     const targetZ = BASE_Z - disp * 1.5;
     camZ += (targetZ - camZ) * 0.05;
