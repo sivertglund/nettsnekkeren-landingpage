@@ -8,7 +8,9 @@
 if (!window.THREE) { console.error("THREE not loaded"); return; }
 const THREE = window.THREE;
 
-const COUNT = window.matchMedia("(max-width: 768px)").matches ? 12000 : 24000;
+// coarse pointer OR small screen = phone/tablet → lighter everything
+const IS_MOBILE = window.matchMedia("(max-width: 768px)").matches || window.matchMedia("(pointer: coarse)").matches;
+const COUNT = IS_MOBILE ? 9000 : 24000;
 const RADIUS = 1.7;
 const SPREAD = 0.8; // how far particles fly apart mid-transition (calm, less chaos)
 
@@ -263,8 +265,9 @@ for (let i = 0; i < COUNT; i++) {
 
 // ---------- three.js setup ----------
 const canvas = document.getElementById("gl");
-const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: !IS_MOBILE, alpha: true, powerPreference: "high-performance" });
+// cap resolution hard on mobile — additive blending over many big points is fill-rate bound
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, IS_MOBILE ? 1.5 : 2));
 renderer.setClearColor(0x000000, 0);
 
 const scene = new THREE.Scene();
@@ -395,8 +398,14 @@ const sats = SAT_ORBITS.map((o) => {
 });
 
 // ---------- sizing ----------
+let lastW = 0, lastH = 0;
 function resize() {
   const w = window.innerWidth, h = window.innerHeight;
+  // On phones the URL bar collapsing/expanding changes ONLY the height and would
+  // otherwise re-size the renderer on every scroll frame → the stutter you saw.
+  // Ignore pure-height jitter; only react to real changes (orientation / width).
+  if (IS_MOBILE && lastW === w && Math.abs(h - lastH) < 140) return;
+  lastW = w; lastH = h;
   renderer.setSize(w, h, false);
   camera.aspect = w / h;
   camera.updateProjectionMatrix();
@@ -464,9 +473,13 @@ function animate() {
   const localT = progress * segCount - seg;
   const A = SHAPES[seg], B = SHAPES[seg + 1];
   const morphT = holdRamp(localT);           // figures linger, then transition
-  const e = easeInOut(morphT);
+  const isWorm = (seg === 4);                // wormhole -> cosmic web segment
   const disp = Math.sin(Math.PI * morphT);   // 0 while resting, 1 mid-transition
   const disp2 = disp * disp;
+  // Wormhole: keep the tube perfectly intact while we fly through it, then let the
+  // cosmic web form only in the final stretch (no half-dissolved tube mid-flight).
+  const e = isWorm ? easeInOut(smoothstep(0.55, 1.0, morphT)) : easeInOut(morphT);
+  const spreadAmt = isWorm ? 0.0 : SPREAD;   // no outward chaos inside the tunnel
 
   const pos = geo.attributes.position.array;
   for (let i = 0; i < COUNT; i++) {
@@ -477,7 +490,7 @@ function animate() {
     let z = A[iz] + (B[iz] - A[iz]) * e;
     // gentle outward drift at mid-transition (smooth, not violent)
     const s = seeds[i];
-    const swirl = disp * SPREAD * (0.8 + 0.2 * Math.sin(s + time * 0.6));
+    const swirl = disp * spreadAmt * (0.8 + 0.2 * Math.sin(s + time * 0.6));
     x += dirs[ix] * swirl;
     y += dirs[iy] * swirl;
     z += dirs[iz] * swirl;
@@ -504,11 +517,21 @@ function animate() {
   const slideX = (seg === 4) ? 0 : disp * 0.9 * dir;
   const slideY = (seg === 4) ? 0 : disp * 0.28 * ((seg % 2 === 0) ? -1 : 1);
 
-  points.position.x = mo.px + slideX;
-  points.position.y = mo.py + slideY;
-  points.rotation.y = spin + mouse.x * 0.5;
-  points.rotation.x = mo.rx + mouse.y * 0.25;
-  points.rotation.z = mo.rz;
+  if (isWorm) {
+    // Lock the tunnel dead-centred and axis-aligned so the camera stays INSIDE it
+    // the whole way through (no sliding out the side, no seeing it edge-on).
+    points.position.x += (0 - points.position.x) * 0.12;
+    points.position.y += (0 - points.position.y) * 0.12;
+    points.rotation.x += (0 - points.rotation.x) * 0.12;
+    points.rotation.y += (0 - points.rotation.y) * 0.12;
+    points.rotation.z += (0 - points.rotation.z) * 0.12;
+  } else {
+    points.position.x = mo.px + slideX;
+    points.position.y = mo.py + slideY;
+    points.rotation.y = spin + mouse.x * 0.5;
+    points.rotation.x = mo.rx + mouse.y * 0.25;
+    points.rotation.z = mo.rz;
+  }
 
   // ---- pointer reshapes everything via the shader (screen-space repel) ----
   uCursor.value.set(mouse.x * 2, -mouse.y * 2);  // cursor in NDC
@@ -536,13 +559,26 @@ function animate() {
   }
 
   // ---- camera: ease into the figure as it dissolves; fly THROUGH the wormhole ----
-  const diveZ = (seg === 4) ? disp * 4.4 : 0;     // seg 4 = wormhole -> cosmic web: fly deep through the tunnel
-  const targetZ = BASE_Z - disp * 1.5 - diveZ;
-  camZ += (targetZ - camZ) * 0.05;
-  camera.position.z = camZ;
-  camera.position.x += (mouse.x * 0.55 - camera.position.x) * 0.03;
-  camera.position.y += (-mouse.y * 0.35 - camera.position.y) * 0.03;
-  camera.lookAt(0, 0, 0);
+  if (isWorm) {
+    // Pull the camera straight down the tube and out the far end, looking FORWARD
+    // along the axis the whole time (never lookAt origin → never flips to a side view).
+    // The cosmic web then assembles ahead of us as we ease back out.
+    const dive = Math.sin(Math.PI * morphT);        // 0 → 1 → 0 across the segment
+    const targetZ = BASE_Z - dive * 8.5;            // deep travel through the tunnel
+    camZ += (targetZ - camZ) * 0.06;
+    camera.position.z = camZ;
+    // hard-lock to the tube's centre line — this kills the old "turn to the right"
+    camera.position.x += (0 - camera.position.x) * 0.1;
+    camera.position.y += (0 - camera.position.y) * 0.1;
+    camera.lookAt(0, 0, camZ - 6);                  // always gaze forward down the throat
+  } else {
+    const targetZ = BASE_Z - disp * 1.5;
+    camZ += (targetZ - camZ) * 0.05;
+    camera.position.z = camZ;
+    camera.position.x += (mouse.x * 0.55 - camera.position.x) * 0.03;
+    camera.position.y += (-mouse.y * 0.35 - camera.position.y) * 0.03;
+    camera.lookAt(0, 0, 0);
+  }
 
   // ---- starfield: gentle pointer parallax + slow drift ----
   stars.rotation.y = time * 0.005;

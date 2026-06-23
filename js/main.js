@@ -4,6 +4,7 @@
 (function () {
   "use strict";
   const prefersReduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const isTouch = matchMedia("(pointer: coarse)").matches;
   document.body.classList.add("is-loading");
 
   /* ---------------- Preloader ---------------- */
@@ -28,12 +29,15 @@
 
   /* ---------------- Lenis smooth scroll ---------------- */
   let lenis = null;
-  if (window.Lenis && !prefersReduced) {
+  // On touch devices, hijacking the scroll (syncTouch) fights the OS and stutters
+  // hard alongside a full-screen WebGL canvas — let the phone scroll natively and
+  // just read scrollY each frame. Lenis smoothing stays on desktop where it shines.
+  if (window.Lenis && !prefersReduced && !isTouch) {
     // lerp-based smoothing = continuous, heavy, premium glide (like the reference)
     lenis = new Lenis({
       lerp: 0.045,         // smooth, heavy glide
       smoothWheel: true,
-      syncTouch: true,
+      syncTouch: false,
       wheelMultiplier: 0.7,
       touchMultiplier: 1.1,
     });
@@ -42,8 +46,15 @@
   }
 
   /* ---------------- Drive particle progress from scroll ---------------- */
+  // Cache the scrollable height — reading scrollHeight every frame forces a layout
+  // reflow (the marquee loop calls pushProgress 60×/s), which is a big mobile stutter.
+  let scrollMax = 0;
+  function recalcMax() { scrollMax = document.documentElement.scrollHeight - window.innerHeight; }
+  recalcMax();
+  window.addEventListener("resize", recalcMax);
+  window.addEventListener("load", recalcMax);
   function pushProgress() {
-    const max = document.documentElement.scrollHeight - window.innerHeight;
+    const max = scrollMax;
     const p = max > 0 ? window.scrollY / max : 0;
     if (window.NOVA) window.NOVA.setProgress(p);
     const bar = document.getElementById("progressBar");
@@ -128,6 +139,7 @@
     } else {
       document.querySelectorAll("[data-reveal]").forEach((el) => { el.style.opacity = 1; el.style.transform = "none"; });
     }
+    recalcMax();
     pushProgress();
   }
 })();
