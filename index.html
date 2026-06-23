@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nettsnekkeren — Løft merkevaren din</title>
+  <meta name="description" content="Førstevalget for bedrifter som vil henge med på AI. Vi bygger nettsider, AI-løsninger, apper og kurs — fra bunnen." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23000'/%3E%3Ctext x='50' y='70' font-size='64' font-family='Oswald,sans-serif' font-weight='700' fill='%23fff' text-anchor='middle'%3EN%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+  <!-- ===== PRELOADER ===== -->
+  <div class="preloader" id="preloader">
+    <div class="preloader__inner">
+      <span class="preloader__label">NETTSNEKKEREN</span>
+      <span class="preloader__pct" id="preloaderPct">0%</span>
+    </div>
+    <div class="preloader__bar"><span id="preloaderBar"></span></div>
+  </div>
+
+  <!-- ===== WebGL canvas ===== -->
+  <canvas id="gl"></canvas>
+
+  <!-- ===== NAV ===== -->
+  <header class="nav" id="nav">
+    <a href="#hero" class="logo" data-scroll-to="hero">Nettsnekkeren</a>
+    <div class="nav__right">
+      <a href="#kontakt" class="nav__talk" data-scroll-to="kontakt">Kontakt oss</a>
+      <button class="nav__lang">No</button>
+      <button class="nav__burger" id="navBurger" aria-label="Meny"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <!-- ===== FULLSCREEN MENU ===== -->
+  <nav class="menu" id="menu" aria-hidden="true">
+    <ul>
+      <li><a href="#hero" data-scroll-to="hero"><span>01</span> Hjem</a></li>
+      <li><a href="#tjenester" data-scroll-to="tjenester"><span>02</span> Tjenester</a></li>
+      <li><a href="#ai" data-scroll-to="ai"><span>03</span> Klar for AI</a></li>
+      <li><a href="#team" data-scroll-to="team"><span>04</span> Team</a></li>
+      <li><a href="#visjon" data-scroll-to="visjon"><span>05</span> Visjon</a></li>
+      <li><a href="#kontakt" data-scroll-to="kontakt"><span>06</span> Kontakt</a></li>
+    </ul>
+  </nav>
+
+  <main id="content">
+
+    <!-- HERO -->
+    <section class="panel hero" id="hero">
+      <div class="hero__inner">
+        <h1 class="display" data-reveal>
+          <span class="outline">LØFT</span>
+          <span>MERKE&shy;VAREN</span>
+          <span>DIN</span>
+        </h1>
+        <p class="hero__tag" data-reveal>
+          Førstevalget for bedrifter som vil henge med på AI. Vi bygger
+          nettsider, AI-løsninger, apper og kurs.
+        </p>
+        <p class="hero__scroll" data-reveal>Bla for å utforske <span class="arrow">↓</span></p>
+      </div>
+    </section>
+
+    <!-- STATEMENT -->
+    <section class="panel statement" id="statement">
+      <p class="statement__text" data-split>
+        Vi forener design, teknologi og AI for å bygge nettsider, apper og
+        verktøy som flytter bedriften din fremover.
+      </p>
+    </section>
+
+    <!-- TJENESTER (usta-style columns) -->
+    <section class="panel expertise" id="tjenester">
+      <h2 class="display display--lg expertise__title" data-reveal><span class="outline">HVA</span> VI GJØR</h2>
+      <div class="expertise__grid">
+        <div class="col" data-reveal>
+          <h3>Web</h3>
+          <ul>
+            <li><a href="nettsider.html">Nettsider</a></li>
+            <li><a href="nettsider.html">Webdesign</a></li>
+            <li><a href="nettsider.html">Landingssider</a></li>
+            <li><a href="nettsider.html">E-handel</a></li>
+          </ul>
+        </div>
+        <div class="col" data-reveal>
+          <h3>AI</h3>
+          <ul>
+            <li><a href="kommer-snart.html?t=AI-l%C3%B8sninger">AI-løsninger</a></li>
+            <li><a href="kommer-snart.html?t=Agents">Agents</a></li>
+            <li><a href="kommer-snart.html?t=Plugins">Plugins</a></li>
+            <li><a href="kommer-snart.html?t=Skills">Skills</a></li>
+            <li><a href="kommer-snart.html?t=Automatisering">Automatisering</a></li>
+          </ul>
+        </div>
+        <div class="col" data-reveal>
+          <h3>Apper</h3>
+          <ul>
+            <li><a href="kommer-snart.html?t=Mobil-apper">Mobil-apper</a></li>
+            <li><a href="kommer-snart.html?t=Web-apper">Web-apper</a></li>
+            <li><a href="kommer-snart.html?t=Prototyper">Prototyper</a></li>
+          </ul>
+        </div>
+        <div class="col" data-reveal>
+          <h3>Mer</h3>
+          <ul>
+            <li><a href="kommer-snart.html?t=Kurs">Kurs</a></li>
+            <li><a href="kommer-snart.html?t=R%C3%A5dgivning">Rådgivning</a></li>
+            <li><a href="kommer-snart.html?t=Drift">Drift &amp; vedlikehold</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- KLAR FOR AI -->
+    <section class="panel ai-panel" id="ai">
+      <div class="ai__inner">
+        <h2 class="display display--lg" data-reveal><span class="outline">HENG MED</span><br />PÅ FREMTIDEN</h2>
+        <p class="lead" data-reveal>
+          AI endrer hvordan bedrifter jobber. Vi gjør teknologien
+          <em>tilgjengelig og lønnsom</em> for deg.
+        </p>
+        <div class="ai__points">
+          <div class="ai__point" data-reveal><span>01</span><p>Vi kartlegger hvor AI faktisk gir verdi for deg.</p></div>
+          <div class="ai__point" data-reveal><span>02</span><p>Vi bygger løsningene og kobler dem sammen.</p></div>
+          <div class="ai__point" data-reveal><span>03</span><p>Vi lærer teamet ditt å bruke dem.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEAM -->
+    <section class="panel team" id="team">
+      <div class="team__inner">
+        <h2 class="display display--lg" data-reveal>VÅRT TEAM</h2>
+        <div class="team__grid team__grid--duo">
+          <div class="member" data-reveal><span class="member__name">Sivert Gjulem Lund</span></div>
+          <div class="member" data-reveal><span class="member__name">Andreas Barbo</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VISJON — the loop (spiral wormhole) that springs into the cosmic web -->
+    <section class="panel vision" id="visjon">
+      <div class="vision__inner">
+        <p class="vision__eyebrow" data-reveal>Vår visjon</p>
+        <p class="vision__text" data-split>
+          Vi vil bruke teknologi til å skape fantastiske ting.
+        </p>
+      </div>
+    </section>
+
+    <!-- KONTAKT -->
+    <section class="panel contact" id="kontakt">
+      <div class="contact__inner">
+        <p class="contact__pre" data-reveal>la oss jobbe sammen</p>
+        <a href="mailto:post@nettsnekkeren.no" class="contact__mail display" data-reveal>post@nettsnekkeren.no</a>
+        <div class="contact__socials" data-reveal>
+          <a href="#">Instagram</a><a href="#">Facebook</a><a href="#">LinkedIn</a>
+        </div>
+      </div>
+      <footer class="footer">
+        <span class="footer__logo">NETTSNEKKEREN</span>
+        <span>© 2026 — Vi bygger fra bunnen</span>
+        <span>post@nettsnekkeren.no</span>
+      </footer>
+    </section>
+
+  </main>
+
+  <div class="progress" id="progress"><span id="progressBar"></span></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="js/particles.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
