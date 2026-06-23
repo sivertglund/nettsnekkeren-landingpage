@@ -473,7 +473,6 @@ function animate() {
   const localT = progress * segCount - seg;
   const A = SHAPES[seg], B = SHAPES[seg + 1];
   const morphT = holdRamp(localT);           // figures linger, then transition
-  const isWorm = (seg === 4);                // wormhole -> cosmic web segment
   const disp = Math.sin(Math.PI * morphT);   // 0 while resting, 1 mid-transition
   const disp2 = disp * disp;
   const e = easeInOut(morphT);
@@ -516,21 +515,16 @@ function animate() {
   const slideX = noSlide ? 0 : disp * 0.9 * dir;
   const slideY = noSlide ? 0 : disp * 0.28 * ((seg % 2 === 0) ? -1 : 1);
 
-  if (isWorm) {
-    // Lock the tunnel dead-centred and axis-aligned so the camera stays INSIDE it
-    // the whole way through (no sliding out the side, no seeing it edge-on).
-    points.position.x += (0 - points.position.x) * 0.12;
-    points.position.y += (0 - points.position.y) * 0.12;
-    points.rotation.x += (0 - points.rotation.x) * 0.12;
-    points.rotation.y += (0 - points.rotation.y) * 0.12;
-    points.rotation.z += (0 - points.rotation.z) * 0.12;
-  } else {
-    points.position.x = mo.px + slideX;
-    points.position.y = mo.py + slideY;
-    points.rotation.y = spin + mouse.x * 0.5;
-    points.rotation.x = mo.rx + mouse.y * 0.25;
-    points.rotation.z = mo.rz;
-  }
+  // How strongly the tube must sit straight on its axis (0 = free idle motion, 1 = locked).
+  // Ramp it in WHILE the tunnel forms in seg 3 (not after), and hold it through the
+  // fly-through in seg 4 — so the cylinder is never seen tilted / from the side.
+  const align = seg === 4 ? 1 : seg === 3 ? Math.min(1, e * 1.6) : 0;
+  const free = 1 - align;
+  points.position.x = (mo.px + slideX) * free;
+  points.position.y = (mo.py + slideY) * free;
+  points.rotation.y = (spin + mouse.x * 0.5) * free;
+  points.rotation.x = (mo.rx + mouse.y * 0.25) * free;
+  points.rotation.z = mo.rz * free;
 
   // ---- pointer reshapes everything via the shader (screen-space repel) ----
   uCursor.value.set(mouse.x * 2, -mouse.y * 2);  // cursor in NDC
@@ -563,14 +557,9 @@ function animate() {
   const targetZ = BASE_Z - disp * 1.5;
   camZ += (targetZ - camZ) * 0.05;
   camera.position.z = camZ;
-  if (isWorm) {
-    // Lock to the centre line so the tube stays around us — never seen from the side.
-    camera.position.x += (0 - camera.position.x) * 0.06;
-    camera.position.y += (0 - camera.position.y) * 0.06;
-  } else {
-    camera.position.x += (mouse.x * 0.55 - camera.position.x) * 0.03;
-    camera.position.y += (-mouse.y * 0.35 - camera.position.y) * 0.03;
-  }
+  // center the camera on the tube's axis as it forms (free elsewhere) — same `align`
+  camera.position.x += (mouse.x * 0.55 * free - camera.position.x) * 0.04;
+  camera.position.y += (-mouse.y * 0.35 * free - camera.position.y) * 0.04;
   camera.lookAt(0, 0, 0);
 
   // ---- starfield: gentle pointer parallax + slow drift ----
