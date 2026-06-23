@@ -476,12 +476,7 @@ function animate() {
   const isWorm = (seg === 4);                // wormhole -> cosmic web segment
   const disp = Math.sin(Math.PI * morphT);   // 0 while resting, 1 mid-transition
   const disp2 = disp * disp;
-  const e = easeInOut(morphT);               // one continuous morph (no snapping)
-  const spreadAmt = isWorm ? 0.0 : SPREAD;   // no outward chaos inside the tunnel
-  // Wormhole: build the cosmic web FAR down the tube (z = -10), so flying forward
-  // carries us straight into it — one monotonic motion, no diving past then reversing.
-  const WEB_Z = -10.0;
-  const webOff = isWorm ? WEB_Z : 0.0;
+  const e = easeInOut(morphT);
 
   const pos = geo.attributes.position.array;
   for (let i = 0; i < COUNT; i++) {
@@ -489,10 +484,10 @@ function animate() {
     // base interpolation between shapes
     let x = A[ix] + (B[ix] - A[ix]) * e;
     let y = A[iy] + (B[iy] - A[iy]) * e;
-    let z = A[iz] + (B[iz] + webOff - A[iz]) * e;
+    let z = A[iz] + (B[iz] - A[iz]) * e;
     // gentle outward drift at mid-transition (smooth, not violent)
     const s = seeds[i];
-    const swirl = disp * spreadAmt * (0.8 + 0.2 * Math.sin(s + time * 0.6));
+    const swirl = disp * SPREAD * (0.8 + 0.2 * Math.sin(s + time * 0.6));
     x += dirs[ix] * swirl;
     y += dirs[iy] * swirl;
     z += dirs[iz] * swirl;
@@ -562,26 +557,21 @@ function animate() {
     s.g.attributes.position.needsUpdate = true;
   }
 
-  // ---- camera: ease into the figure as it dissolves; fly THROUGH the wormhole ----
+  // ---- camera: dive deep through the tube into the web, then ease back to reveal it ----
+  const diveZ = isWorm ? disp * 4.4 : 0;     // seg 4: fly deep through the tunnel, then back
+  const targetZ = BASE_Z - disp * 1.5 - diveZ;
+  camZ += (targetZ - camZ) * 0.05;
+  camera.position.z = camZ;
   if (isWorm) {
-    // One smooth forward glide through the tube. The web sits at z = -10 and the camera
-    // stays a constant 5.4 in front of it the whole way → steady framing, no reversal,
-    // never slides out the side. (BASE_Z - 10k) - (-10k) = BASE_Z, always looking forward.
-    const k = easeInOut(morphT);                    // 0 → 1 monotonic
-    const targetZ = BASE_Z + WEB_Z * k;             // 5.4 → -4.6: travel straight through
-    camZ += (targetZ - camZ) * 0.06;
-    camera.position.z = camZ;
-    camera.position.x += (0 - camera.position.x) * 0.1;   // hard-lock to the centre line
-    camera.position.y += (0 - camera.position.y) * 0.1;
-    camera.lookAt(0, 0, WEB_Z * k);                 // keep the forming web framed dead ahead
+    // Lock to the centre line + look straight down the axis → no sliding out the side,
+    // no "turn to the right" (both came from the pointer steering the camera here).
+    camera.position.x += (0 - camera.position.x) * 0.06;
+    camera.position.y += (0 - camera.position.y) * 0.06;
   } else {
-    const targetZ = BASE_Z - disp * 1.5;
-    camZ += (targetZ - camZ) * 0.05;
-    camera.position.z = camZ;
     camera.position.x += (mouse.x * 0.55 - camera.position.x) * 0.03;
     camera.position.y += (-mouse.y * 0.35 - camera.position.y) * 0.03;
-    camera.lookAt(0, 0, 0);
   }
+  camera.lookAt(0, 0, 0);
 
   // ---- starfield: gentle pointer parallax + slow drift ----
   stars.rotation.y = time * 0.005;
