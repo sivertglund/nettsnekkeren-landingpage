@@ -136,7 +136,9 @@ function fillWormhole() {
 function fillCosmicWeb() {
   const a = new Float32Array(COUNT * 3);
   const NODES = 300;
-  const RX = 5.0, RY = 3.6, RZ = 1.4;
+  // Portrait phones: a narrower, taller, more compact web so the same particles read as a
+  // dense spider-web that fits the screen instead of a thin sparse slice. Landscape: wide.
+  const RX = IS_MOBILE ? 1.7 : 5.0, RY = IS_MOBILE ? 3.0 : 3.6, RZ = IS_MOBILE ? 1.1 : 1.4;
   const gauss = () => (Math.random() + Math.random() + Math.random() - 1.5) / 1.5;
   const clampN = (v, r) => Math.max(-r, Math.min(r, v));
 
@@ -285,7 +287,9 @@ geo.setAttribute("aScale", new THREE.BufferAttribute(scales, 1));
 // SCREEN space, so both the figure and the stars reshape around the cursor.
 const uCursor = { value: new THREE.Vector2(99, 99) };
 const uRadius = { value: 0.13 };   // influence radius in NDC (cursor void)
-const uPush   = { value: 0.10 };   // how far points are pushed
+// No pointer on touch → the repel would just sit as a dead "black hole" in the centre
+// and there's nothing to move it with, so disable it entirely on mobile.
+const uPush   = { value: IS_MOBILE ? 0.0 : 0.10 };   // how far points are pushed
 const uAspect = { value: 1.0 };
 
 const mat = new THREE.ShaderMaterial({
@@ -357,7 +361,7 @@ const starMat = mat.clone();
 starMat.uniforms.uSize   = { value: renderer.getPixelRatio() * 7.5 };
 starMat.uniforms.uCursor = uCursor;
 starMat.uniforms.uRadius = uRadius;
-starMat.uniforms.uPush   = { value: 0.16 };
+starMat.uniforms.uPush   = { value: IS_MOBILE ? 0.0 : 0.16 };
 starMat.uniforms.uAspect = uAspect;
 const stars = new THREE.Points(starGeo, starMat);
 stars.position.z = -3;
@@ -408,6 +412,9 @@ function resize() {
   lastW = w; lastH = h;
   renderer.setSize(w, h, false);
   camera.aspect = w / h;
+  // On tall/narrow phone screens, widen the field of view so the figures aren't
+  // cropped at the sides (they're built for landscape). Capped to avoid fisheye.
+  camera.fov = camera.aspect < 1 ? Math.min(72, 50 / camera.aspect) : 50;
   camera.updateProjectionMatrix();
   mat.uniforms.uSize.value = renderer.getPixelRatio() * (h / 1000) * 11;
   for (const s of sats) s.m.uniforms.uSize.value = renderer.getPixelRatio() * (h / 1000) * 11;
@@ -420,10 +427,14 @@ resize();
 let progress = 0;       // 0..1 over whole page
 let targetProgress = 0;
 const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
-window.addEventListener("pointermove", (e) => {
-  mouse.tx = (e.clientX / window.innerWidth - 0.5);
-  mouse.ty = (e.clientY / window.innerHeight - 0.5);
-});
+// Only track a real pointer. On touch, "pointermove" fires while you drag to scroll,
+// which would swing the figures around and fight the scroll — so leave mouse at centre.
+if (!IS_MOBILE) {
+  window.addEventListener("pointermove", (e) => {
+    mouse.tx = (e.clientX / window.innerWidth - 0.5);
+    mouse.ty = (e.clientY / window.innerHeight - 0.5);
+  });
+}
 
 const easeInOut = (t) => t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2,3)/2;
 const segCount = SHAPES.length - 1;
