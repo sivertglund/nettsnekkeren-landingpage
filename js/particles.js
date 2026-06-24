@@ -463,8 +463,10 @@ function animate() {
   const dt = Math.min(time - prevTime, 0.05);
   prevTime = time;
 
-  // smooth toward target scroll progress (lower = slower, heavier, smoother morph)
-  progress += (targetProgress - progress) * 0.02;
+  // smooth toward target scroll progress. Lenis already smooths the scroll itself, so this
+  // can track tighter — at 0.02 the morph lagged ~1s behind and you'd scroll past it before
+  // it played. 0.06 keeps the glide smooth but lets the animation actually follow the scroll.
+  progress += (targetProgress - progress) * 0.06;
   mouse.x += (mouse.tx - mouse.x) * 0.04;
   mouse.y += (mouse.ty - mouse.y) * 0.04;
 

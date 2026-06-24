@@ -4,7 +4,6 @@
 (function () {
   "use strict";
   const prefersReduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const isTouch = matchMedia("(pointer: coarse)").matches;
   document.body.classList.add("is-loading");
 
   /* ---------------- Preloader ---------------- */
@@ -28,16 +27,16 @@
   }
 
   /* ---------------- Lenis smooth scroll ---------------- */
+  // Paced smooth scroll on ALL devices (incl. touch) — this is what lets the particle
+  // animation play out AS you scroll. Without it on mobile, native fling-scroll races
+  // past while the morph crawls behind. The earlier stutter is handled by the perf fixes
+  // (fewer particles on mobile, cached scroll height, no URL-bar reflow), not by killing this.
   let lenis = null;
-  // On touch devices, hijacking the scroll (syncTouch) fights the OS and stutters
-  // hard alongside a full-screen WebGL canvas — let the phone scroll natively and
-  // just read scrollY each frame. Lenis smoothing stays on desktop where it shines.
-  if (window.Lenis && !prefersReduced && !isTouch) {
-    // lerp-based smoothing = continuous, heavy, premium glide (like the reference)
+  if (window.Lenis && !prefersReduced) {
     lenis = new Lenis({
       lerp: 0.045,         // smooth, heavy glide
       smoothWheel: true,
-      syncTouch: false,
+      syncTouch: true,
       wheelMultiplier: 0.7,
       touchMultiplier: 1.1,
     });
