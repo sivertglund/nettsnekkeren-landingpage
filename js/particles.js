@@ -10,7 +10,7 @@ const THREE = window.THREE;
 
 // coarse pointer OR small screen = phone/tablet → lighter everything
 const IS_MOBILE = window.matchMedia("(max-width: 768px)").matches || window.matchMedia("(pointer: coarse)").matches;
-const COUNT = IS_MOBILE ? 9000 : 24000;
+const COUNT = IS_MOBILE ? 7500 : 24000;
 const RADIUS = 1.7;
 const SPREAD = 0.8; // how far particles fly apart mid-transition (calm, less chaos)
 
@@ -269,7 +269,7 @@ for (let i = 0; i < COUNT; i++) {
 const canvas = document.getElementById("gl");
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: !IS_MOBILE, alpha: true, powerPreference: "high-performance" });
 // cap resolution hard on mobile — additive blending over many big points is fill-rate bound
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, IS_MOBILE ? 1.5 : 2));
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, IS_MOBILE ? 1.3 : 2));
 renderer.setClearColor(0x000000, 0);
 
 const scene = new THREE.Scene();
@@ -474,10 +474,10 @@ function animate() {
   const dt = Math.min(time - prevTime, 0.05);
   prevTime = time;
 
-  // smooth toward target scroll progress. Lenis already smooths the scroll itself, so this
-  // can track tighter — at 0.02 the morph lagged ~1s behind and you'd scroll past it before
-  // it played. 0.06 keeps the glide smooth but lets the animation actually follow the scroll.
-  progress += (targetProgress - progress) * 0.06;
+  // smooth toward target scroll progress. On mobile the scroll is native (no Lenis), so
+  // track it tightly (0.12) — the morph follows the finger instead of lagging behind.
+  // Desktop keeps a smoother glide (0.06) on top of Lenis' own smoothing.
+  progress += (targetProgress - progress) * (IS_MOBILE ? 0.12 : 0.06);
   mouse.x += (mouse.tx - mouse.x) * 0.04;
   mouse.y += (mouse.ty - mouse.y) * 0.04;
 
