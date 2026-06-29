@@ -154,6 +154,9 @@ body.menu-open .menu a { transform: translateY(0); }
 .contact__pre { letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); font-size: 0.85rem; }
 .contact__mail { font-size: clamp(1.8rem, 7vw, 6rem); font-weight: 600; transition: color 0.3s, letter-spacing 0.4s var(--ease); }
 .contact__mail:hover { color: var(--blue); letter-spacing: 0.01em; }
+.contact__phone { font-family: var(--display); font-weight: 500; font-size: clamp(1.3rem, 3.4vw, 2.2rem);
+  letter-spacing: 0.02em; color: var(--muted); transition: color 0.3s; }
+.contact__phone:hover { color: var(--fg); }
 .contact__socials { display: flex; gap: clamp(16px, 3vw, 40px); margin-top: 10px; }
 .contact__socials a { font-size: 0.95rem; color: var(--muted); position: relative; transition: color 0.3s; }
 .contact__socials a:hover { color: var(--fg); }
@@ -354,7 +357,10 @@ body.menu-open .menu a { transform: translateY(0); }
 
 .sub-h { margin-bottom: 46px; }
 .subhero__title { font-size: clamp(3rem, 9.5vw, 8.5rem); }
-.subcta__title { font-size: clamp(2.6rem, 8vw, 7rem); line-height: 0.95; margin-bottom: 36px; }
+.subcta__title { font-size: clamp(2.6rem, 8vw, 7rem); line-height: 0.95; margin-bottom: 28px; }
+.subcta__lead { color: var(--muted); max-width: 52ch; margin: 0 auto 36px;
+  font-size: clamp(1.05rem, 2vw, 1.3rem); line-height: 1.55; }
+.subcta__actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 
 /* numbered feature cards (no emoji) */
 .feature__icon { display: none; }
