@@ -21,10 +21,11 @@
     });
   } else if (cursor) { cursor.style.display = "none"; }
 
-  /* Lenis smooth scroll */
+  /* Lenis smooth scroll — desktop only; native scroll on touch (no jank over WebGL) */
+  const isTouch = matchMedia("(pointer: coarse)").matches;
   let lenis = null;
-  if (window.Lenis && !prefersReduced) {
-    lenis = new Lenis({ lerp: 0.08, smoothWheel: true, wheelMultiplier: 0.9 });
+  if (window.Lenis && !prefersReduced && !isTouch) {
+    lenis = new Lenis({ lerp: 0.08, smoothWheel: true, syncTouch: false, wheelMultiplier: 0.9 });
     const raf = (t) => { lenis.raf(t); requestAnimationFrame(raf); };
     requestAnimationFrame(raf);
   }
