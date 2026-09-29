@@ -4,164 +4,247 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Nettsider — Nettsnekkeren</title>
-  <meta name="description" content="Skreddersydde nettsider bygget fra bunnen. Gratis hosting og CMS, ingen månedlige abonnement, full eierskap." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css" />
+  <meta name="description" content="Skreddersydde nettsider med redigeringsløsning, teknisk SEO og agentoptimalisering. Designet for merkevaren din og klare for Google, ChatGPT og andre KI-agenter." />
+  <link rel="canonical" href="https://nettsnekkeren.no/nettsider.html" />
+  <meta name="theme-color" content="#eef2f4" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="nb_NO" />
+  <meta property="og:title" content="Nettsider — Nettsnekkeren" />
+  <meta property="og:description" content="Skreddersydde nettsider med redigeringsløsning, SEO og agentoptimalisering." />
+  <meta property="og:url" content="https://nettsnekkeren.no/nettsider.html" />
+
+  <script>document.documentElement.classList.add("js");</script>
+  <link rel="preload" href="fonts/oswald-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="css/style.css?v=20" />
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-</head>
-<body class="subpage">
-  <div class="starfield" aria-hidden="true"></div>
-  <canvas id="gl" aria-hidden="true"></canvas>
 
-  <header class="nav nav--solid">
-    <a href="index.html" class="logo">Nettsnekkeren</a>
-    <div class="nav__right">
-      <a href="index.html" class="nav__talk">← Tilbake</a>
-      <a href="mailto:post@nettsnekkeren.no" class="nav__talk">Kontakt oss</a>
-    </div>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Service",
+        "name": "Skreddersydde nettsider",
+        "serviceType": "Webdesign og nettsideutvikling",
+        "provider": { "@type": "ProfessionalService", "name": "Nettsnekkeren", "url": "https://nettsnekkeren.no/", "telephone": "+4746783148", "email": "post@nettsnekkeren.no" },
+        "areaServed": { "@type": "Country", "name": "Norge" },
+        "description": "Nettsider designet og kodet fra bunnen, med teknisk SEO, agentoptimalisering for KI-tjenester og hosting på Cloudflare. Redigering i Sanity som tilvalg. Gratis utkast innen én uke, og betaling først når kunden er fornøyd."
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "Hva er agentoptimalisering?", "acceptedAnswer": { "@type": "Answer", "text": "Det betyr at siden er bygget slik at KI-tjenester som ChatGPT, Gemini og Perplexity kan lese den, forstå hva dere tilbyr og anbefale dere når noen spør. Vi bruker blant annet strukturerte data, llms.txt og tydelige spørsmål og svar." } },
+          { "@type": "Question", "name": "Blir vi synlige på Google?", "acceptedAnswer": { "@type": "Answer", "text": "Siden bygges med teknisk SEO fra start: rask lasting, riktig struktur, metadata og strukturerte data. Det gir Google det beste utgangspunktet for å forstå og vise dere." } },
+          { "@type": "Question", "name": "Kan vi oppdatere siden selv?", "acceptedAnswer": { "@type": "Answer", "text": "Ja, som tilvalg. Vi setter opp redigering i Sanity, så dere endrer tekst, bilder og nyheter selv." } },
+          { "@type": "Question", "name": "Hvor lang tid tar det?", "acceptedAnswer": { "@type": "Answer", "text": "Det kommer an på hvor stor siden er og hvor raskt vi får tekst og bilder. Dere får en tidsplan når vi har snakket sammen." } },
+          { "@type": "Question", "name": "Vi har allerede en nettside. Hva skjer med den?", "acceptedAnswer": { "@type": "Answer", "text": "Vi flytter innholdet over og kobler den nye siden til domenet dere har i dag." } },
+          { "@type": "Question", "name": "Hvem eier siden?", "acceptedAnswer": { "@type": "Answer", "text": "Dere. Kode, domene og innhold er deres fra første dag." } }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <canvas id="dots" aria-hidden="true"></canvas>
+
+  <header class="nav" data-theme="light">
+    <a href="/" class="brand" aria-label="Nettsnekkeren, til forsiden">Nettsnekkeren<i></i></a>
+    <nav class="nav__links" aria-label="Hovedmeny">
+      <a href="nettsider.html" class="nav__keep" aria-current="page">Nettsider</a>
+      <a href="#agent">Agentoptimalisering</a>
+      <a href="#prosjekter">Prosjekter</a>
+    </nav>
+    <a href="#utkast" class="nav__cta">Få gratis utkast</a>
   </header>
 
   <main>
-    <!-- SUBHERO -->
-    <section class="subhero">
-      <div class="container">
-        <span class="subhero__eyebrow" data-reveal>01 — Nettsider</span>
-        <h1 class="display subhero__title" data-reveal>
-          <span class="outline">NETTSIDER</span><br />SOM SELGER
-        </h1>
-        <p class="subhero__lead" data-reveal>
-          Bygget for å fange oppmerksomhet, bygge tillit og gjøre besøkende om til kunder.
-        </p>
-        <div class="subhero__cta" data-reveal>
-          <a href="mailto:post@nettsnekkeren.no" class="btn btn--solid">Få et tilbud <span>↗</span></a>
-          <a href="#portefolje" class="btn btn--ghost">Se portefølje</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- FEATURES -->
-    <section class="features">
-      <div class="container">
-        <h2 class="display display--lg sub-h" data-reveal><span class="outline">ALT</span> ER INKLUDERT</h2>
-        <div class="features__grid">
-          <div class="feature" data-reveal>
-            <span class="feature__no">01</span>
-            <h3>Gratis hosting</h3>
-            <p>Lynrask hosting på Cloudflare, inkludert. Du betaler aldri leie til oss.</p>
-          </div>
-          <div class="feature" data-reveal>
-            <span class="feature__no">02</span>
-            <h3>Rediger selv</h3>
-            <p>Et enkelt CMS følger med, så du oppdaterer innhold uten utvikler.</p>
-          </div>
-          <div class="feature" data-reveal>
-            <span class="feature__no">03</span>
-            <h3>Ingen abonnement</h3>
-            <p>Én fast pris. Ingen månedlige gebyrer, ingen overraskelser.</p>
-          </div>
-          <div class="feature" data-reveal>
-            <span class="feature__no">04</span>
-            <h3>Full eierskap</h3>
-            <p>Du eier kode, domene og innhold fra dag én. Helt og holdent ditt.</p>
-          </div>
-          <div class="feature" data-reveal>
-            <span class="feature__no">05</span>
-            <h3>Gratis flytting</h3>
-            <p>Har du en side i dag? Vi migrerer den uten kostnad.</p>
+    <section class="hero" data-bg="sky" data-landscape>
+      <div class="wrap">
+        <p class="label" data-reveal>Nettsider · Redigeringsløsning · SEO · Agentoptimalisering</p>
+        <h1 class="hero__title" aria-label="Nettsider som løfter merkevaren"><span class="outline">Nettsider</span><span>som løfter</span><span>merkevaren</span></h1>
+        <div class="hero__row">
+          <p class="lead" data-reveal="2">Designet for bedriften din, kodet fra bunnen og klare for både Google og KI-agenter. Du får et gratis utkast innen én uke, og betaler først når du er fornøyd.</p>
+          <div class="btns" data-reveal="3">
+            <a href="#utkast" class="btn">Få gratis utkast <i>→</i></a>
+            <a href="#prosjekter" class="btn btn--line">Se prosjekter</a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- PROCESS -->
-    <section class="process">
-      <div class="container">
-        <h2 class="display display--lg sub-h" data-reveal><span class="outline">SLIK</span> JOBBER VI</h2>
-        <ol class="process__list">
-          <li data-reveal><span>01</span><div><h4>Prat</h4><p>Vi blir kjent med deg og målene dine, og gir tilbud innen 24 timer.</p></div></li>
-          <li data-reveal><span>02</span><div><h4>Design</h4><p>Vi tegner og bygger en side skreddersydd for merkevaren din.</p></div></li>
-          <li data-reveal><span>03</span><div><h4>Finpuss</h4><p>Du gir tilbakemelding, vi justerer til alt sitter perfekt.</p></div></li>
-          <li data-reveal><span>04</span><div><h4>Lansering</h4><p>Vi setter siden live — rask, sikker og klar for kunder.</p></div></li>
+    <section class="block" data-bg="sky" aria-labelledby="design-h">
+      <div class="wrap block__head">
+        <div class="stack">
+          <p class="label" data-reveal>Design</p>
+          <h2 class="h2" id="design-h" data-reveal>Skreddersydd for bedriften.</h2>
+        </div>
+        <p class="lead" data-reveal="2">Ingen Wix, Squarespace eller ferdige temaer. Vi tegner skrift, farger og uttrykk for deres bedrift og deres kunder, og bygger en side som leder besøkende rett til en henvendelse.</p>
+      </div>
+    </section>
+
+    <section class="scene scene--flip" data-bg="sky" aria-labelledby="edit-h">
+      <div class="wrap scene__grid">
+        <div class="stack">
+          <p class="label" data-reveal>Redigering i Sanity · tilvalg</p>
+          <h2 class="h2" id="edit-h" data-reveal>Oppdater alt selv.</h2>
+          <p class="lead" data-reveal="2">Vil dere oppdatere siden selv? Som tilvalg setter vi opp redigering i Sanity for akkurat deres innhold. Endre tekster, bytt bilder og publiser nyheter på minutter, uten å kunne kode.</p>
+          <ul class="specs" data-reveal="3"><li>Tekst og bilder</li><li>Nyheter og prosjekter</li><li>Ingen koding</li></ul>
+        </div>
+        <div class="figure" data-dots="editor" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <section class="scene" data-bg="blue" aria-labelledby="seo-h">
+      <div class="wrap scene__grid">
+        <div class="stack">
+          <p class="label" data-reveal>SEO</p>
+          <h2 class="h2" id="seo-h" data-reveal>Funnet på Google.</h2>
+          <p class="lead" data-reveal="2">Teknisk SEO er bygget inn fra første linje: rask lasting, riktig struktur, metadata og strukturerte data. Alle nettsidene vi har levert til kunder, har 100/100 i SEO i Google Lighthouse.</p>
+          <ul class="specs" data-reveal="3"><li>Core Web Vitals</li><li>Strukturerte data</li><li>Lokalt søk</li></ul>
+        </div>
+        <div class="figure" data-dots="search" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <section class="block" data-bg="blue" aria-labelledby="bygg-h">
+      <div class="wrap block__head">
+        <div class="stack">
+          <p class="label" data-reveal>Utvikling</p>
+          <h2 class="h2" id="bygg-h" data-reveal>Kodet fra bunnen.</h2>
+        </div>
+        <p class="lead" data-reveal="2">Siden skrives i moderne teknologi, uten tunge maler og tillegg. Det gjør den raskere, sikrere og enklere å videreutvikle i årevis.</p>
+      </div>
+    </section>
+
+    <section class="scene" data-bg="night" id="agent" aria-labelledby="agent-h">
+      <div class="wrap scene__grid">
+        <div class="stack">
+          <p class="label" data-reveal>Agentoptimalisering</p>
+          <h2 class="h2" id="agent-h" data-reveal>Bygget for mennesker og maskiner.</h2>
+          <p class="lead" data-reveal="2">Kundene spør ikke lenger bare Google. De spør ChatGPT, Gemini og Perplexity, og snart gjør KI-agenter jobben for dem. Vi strukturerer siden så maskinene forstår hva dere tilbyr, og anbefaler dere.</p>
+          <ul class="specs" data-reveal="3"><li>Strukturerte data</li><li>llms.txt</li><li>Åpent for KI-crawlere</li><li>Svar agenter kan sitere</li></ul>
+        </div>
+        <div class="figure" data-dots="network" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <section class="scene scene--flip" data-bg="night" aria-labelledby="host-h">
+      <div class="wrap scene__grid">
+        <div class="stack">
+          <p class="label" data-reveal>Hosting</p>
+          <h2 class="h2" id="host-h" data-reveal>Rask over hele verden.</h2>
+          <p class="lead" data-reveal="2">Siden leveres fra Cloudflares nettverk i over 330 byer, så den laster raskt uansett hvor kundene er. Dere eier kode, domene og innhold fra første dag.</p>
+          <ul class="specs" data-reveal="3"><li>Cloudflare</li><li>Dere eier alt</li><li>Ingen innlåsing</li></ul>
+        </div>
+        <div class="figure figure--tall" data-dots="earth" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <section class="block" data-bg="night" aria-labelledby="steg-h">
+      <div class="wrap">
+        <div class="block__head">
+          <div class="stack">
+            <p class="label" data-reveal>Slik jobber vi</p>
+            <h2 class="h2" id="steg-h" data-reveal>Fra prat til lansering.</h2>
+          </div>
+        </div>
+        <ol class="steps">
+          <li data-reveal><h3>Prat</h3><p>Vi blir kjent med bedriften, målene og kundene deres. Dere får en plan innen 24 timer.</p></li>
+          <li data-reveal="2"><h3>Skisse</h3><p>Vi tegner opp siden og viser dere retningen før vi begynner å bygge.</p></li>
+          <li data-reveal="3"><h3>Bygg</h3><p>Vi koder siden. Dere ser den underveis og sier fra om det dere vil endre.</p></li>
+          <li data-reveal><h3>Lansering</h3><p>Siden går live på domenet deres, og dere lærer å oppdatere den selv.</p></li>
         </ol>
       </div>
     </section>
 
-    <!-- PORTFOLIO — KUNDER -->
-    <section class="portfolio" id="portefolje">
-      <div class="container">
-        <div class="section-head">
-          <h2 class="display display--lg sub-h" data-reveal><span class="outline">KUND</span>ER</h2>
-          <p class="muted" data-reveal>Ekte nettsider, bygget for ekte bedrifter.</p>
-        </div>
-        <div class="portfolio__grid">
-          <a class="pcard pcard--real" href="https://murmesterhenriksen.no" target="_blank" rel="noopener" data-reveal>
-            <div class="pcard__shot"><img src="assets/portfolio/murmester.jpg" alt="Murmester Henriksen" loading="lazy" /><span class="pcard__tag">Kunde</span></div>
-            <div class="pcard__meta"><h3>Murmester Henriksen</h3><span>Bedriftsside ↗</span></div>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- PORTFOLIO — KONSEPT -->
-    <section class="portfolio portfolio--concept">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <h2 class="display display--lg sub-h" data-reveal><span class="outline">KON</span>SEPT</h2>
-            <p class="muted" data-reveal>Egne konseptsider der vi slipper kreativiteten løs — for å vise spennet av hva vi kan lage.</p>
+    <section class="block" data-bg="night" id="prosjekter" aria-labelledby="prosjekter-h">
+      <div class="wrap">
+        <div class="block__head">
+          <div class="stack">
+            <p class="label" data-reveal>Utvalgte prosjekter</p>
+            <h2 class="h2" id="prosjekter-h" data-reveal>Nylig lansert.</h2>
           </div>
         </div>
-        <div class="portfolio__grid">
-          <a class="pcard pcard--real" href="https://norge-vm-2026.vercel.app/" target="_blank" rel="noopener" data-reveal>
-            <div class="pcard__shot"><img src="assets/portfolio/norge-vm.jpg" alt="Norge VM 2026 — konsept" loading="lazy" /><span class="pcard__tag pcard__tag--concept">Konsept</span></div>
-            <div class="pcard__meta"><h3>Norge VM 2026</h3><span>Sport &amp; event ↗</span></div>
+        <div class="cases">
+          <a class="case" href="https://murmesterhenriksen.no" target="_blank" rel="noopener" data-reveal>
+            <div class="case__shot"><img src="assets/portfolio/murmester.jpg" alt="Forsiden til Murmester Henriksen" loading="lazy" width="1600" height="1000" /></div>
+            <div class="case__meta"><div><h3 class="case__name">Murmester Henriksen</h3><p class="case__what">Kunde · Murer i Vestfold</p></div><span class="case__url">murmesterhenriksen.no ↗</span></div>
           </a>
-          <article class="pcard pcard--soon" data-reveal>
-            <div class="pcard__shot pcard__shot--empty"><span class="pcard__tag pcard__tag--concept">Konsept</span><span class="pcard__soon">Kommer snart</span></div>
-            <div class="pcard__meta"><h3>Restaurant</h3><span>Mat &amp; servering</span></div>
-          </article>
-          <article class="pcard pcard--soon" data-reveal>
-            <div class="pcard__shot pcard__shot--empty"><span class="pcard__tag pcard__tag--concept">Konsept</span><span class="pcard__soon">Kommer snart</span></div>
-            <div class="pcard__meta"><h3>Eiendom</h3><span>Bolig &amp; megler</span></div>
-          </article>
+          <a class="case" href="https://alogistikk.no" target="_blank" rel="noopener" data-reveal="2">
+            <div class="case__shot"><img src="assets/portfolio/alogistikk.jpg" alt="Forsiden til Akershus Logistikk" loading="lazy" width="1600" height="1000" /></div>
+            <div class="case__meta"><div><h3 class="case__name">Akershus Logistikk</h3><p class="case__what">Kunde · Transport og logistikk</p></div><span class="case__url">alogistikk.no ↗</span></div>
+          </a>
+          <a class="case" href="https://kortvarsel.no" target="_blank" rel="noopener" data-reveal>
+            <div class="case__shot"><img src="assets/portfolio/kortvarsel.jpg" alt="Forsiden til Kortvarsel" loading="lazy" width="1440" height="900" /></div>
+            <div class="case__meta"><div><h3 class="case__name">Kortvarsel</h3><p class="case__what">Eget produkt · Fyller avbestilte timer med SMS</p></div><span class="case__url">kortvarsel.no ↗</span></div>
+          </a>
+          <a class="case" href="https://cubeway.pages.dev/" target="_blank" rel="noopener" data-reveal="2">
+            <div class="case__shot"><img src="assets/portfolio/cubeway.jpg" alt="Forsiden til Cubeway" loading="lazy" width="1440" height="900" /></div>
+            <div class="case__meta"><div><h3 class="case__name">Cubeway</h3><p class="case__what">Eget prosjekt · Applansering med 3D-kube</p></div><span class="case__url">cubeway.pages.dev ↗</span></div>
+          </a>
         </div>
       </div>
     </section>
 
-    <!-- CTA -->
-    <section class="subcta">
-      <div class="container">
-        <h2 class="display subcta__title" data-reveal>KLAR FOR<br /><span class="outline">EN NY SIDE?</span></h2>
-        <p class="subcta__lead" data-reveal>
-          Og har du noe vilt på hjertet — en idé, et konsept, noe du virkelig vil vise frem —
-          så er det nettopp sånne prosjekter vi lever for. Vi tar gjerne på oss det kreative og
-          bygger noe folk husker. Slå på tråden, så finner vi ut av det sammen.
-        </p>
-        <div class="subcta__actions" data-reveal>
-          <a href="mailto:post@nettsnekkeren.no" class="btn btn--solid btn--lg">post@nettsnekkeren.no <span>↗</span></a>
-          <a href="tel:+4746783148" class="btn btn--ghost btn--lg">+47 467 83 148</a>
+    <section class="block" data-bg="night" id="sporsmal" aria-labelledby="faq-h">
+      <div class="wrap">
+        <div class="block__head">
+          <div class="stack">
+            <p class="label" data-reveal>Spørsmål</p>
+            <h2 class="h2" id="faq-h" data-reveal>Det folk lurer på.</h2>
+          </div>
         </div>
+        <div class="faq" data-reveal>
+          <details><summary>Hva er agentoptimalisering?</summary><p>Det betyr at siden er bygget slik at KI-tjenester som ChatGPT, Gemini og Perplexity kan lese den, forstå hva dere tilbyr og anbefale dere når noen spør. Vi bruker blant annet strukturerte data, llms.txt og tydelige spørsmål og svar.</p></details>
+          <details><summary>Blir vi synlige på Google?</summary><p>Siden bygges med teknisk SEO fra start: rask lasting, riktig struktur, metadata og strukturerte data. Det gir Google det beste utgangspunktet for å forstå og vise dere.</p></details>
+          <details><summary>Kan vi oppdatere siden selv?</summary><p>Ja, som tilvalg. Vi setter opp redigering i Sanity, så dere endrer tekst, bilder og nyheter selv, og vi viser dere hvordan det brukes.</p></details>
+          <details><summary>Hva er gratis utkast?</summary><p>Fortell oss om bedriften, så lager vi en klikkbar demo av forsiden deres innen én uke. Den er gratis og uforpliktende.</p></details>
+          <details><summary>Når betaler vi?</summary><p>Først når siden går live, og den går ikke live før dere er helt fornøyde. Vi tar ikke forskudd.</p></details>
+          <details><summary>Hvor lang tid tar det?</summary><p>Det kommer an på hvor stor siden er og hvor raskt vi får tekst og bilder. Dere får en tidsplan når vi har snakket sammen.</p></details>
+          <details><summary>Vi har allerede en nettside. Hva skjer med den?</summary><p>Vi flytter innholdet over og kobler den nye siden til domenet dere har i dag.</p></details>
+          <details><summary>Hvem eier siden?</summary><p>Dere. Kode, domene og innhold er deres fra første dag.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <!-- Fornøydgaranti: raketten skytes opp når du scroller videre -->
+    <section class="scene scene--launch" data-bg="night" data-hold="late" aria-labelledby="garanti-h">
+      <div class="wrap scene__grid">
+        <div class="stack">
+          <p class="label" data-reveal>100 % fornøydgaranti</p>
+          <h2 class="h2" id="garanti-h" data-reveal>Du betaler først når du er fornøyd.</h2>
+          <p class="lead" data-reveal="2">Vi justerer til dere er helt fornøyde med resultatet. Først da går siden live, og først da betaler dere. Ingen forskudd.</p>
+        </div>
+        <div class="figure" data-dots="rocket" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <!-- Gratis utkast: overskriften skrives frem i prikker blant stjernene -->
+    <section class="utkast" data-bg="night" id="utkast" aria-labelledby="utkast-h">
+      <div class="wrap">
+        <p class="label" data-reveal>Gratis utkast</p>
+        <h2 class="dotword utkast__dots" id="utkast-h" data-dots="text" data-text="FÅ ET GRATIS UTKAST." data-text-small="FÅ ET GRATIS|UTKAST." data-accent="." data-align="center">Få et gratis utkast.</h2>
+        <p class="lead utkast__lead" data-scrub>Fortell oss om bedriften, så lager vi en klikkbar demo av forsiden deres innen én uke. Helt gratis og uforpliktende.</p>
+        <a class="mail-big" href="mailto:post@nettsnekkeren.no?subject=Gratis%20utkast" data-reveal>post@nettsnekkeren.no</a>
+        <div class="utkast__row" data-reveal="2">
+          <a class="phone-big" href="tel:+4746783148">+47 467 83 148</a>
+          <a class="utkast__sms" href="sms:+4746783148">Send SMS →</a>
+        </div>
+      </div>
+      <div class="wrap">
+        <footer class="footer">
+          <span>© 2026 Nettsnekkeren · Org.nr 937 754 868</span>
+          <span><a href="/">Forsiden</a> · <a href="mailto:post@nettsnekkeren.no">post@nettsnekkeren.no</a> · <a href="tel:+4746783148">467 83 148</a></span>
+        </footer>
       </div>
     </section>
   </main>
 
-  <footer class="footer footer--page">
-    <div class="container footer__row">
-      <a href="index.html" class="footer__logo">NETTSNEKKEREN</a>
-      <span>© 2026 · Org.nr 937 754 868</span>
-      <span>post@nettsnekkeren.no · +47 467 83 148</span>
-    </div>
-  </footer>
-
-  <script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="js/page-particles.js"></script>
-  <script src="js/page.js"></script>
+  <script src="js/dots.js?v=20" defer></script>
+  <script src="js/site.js?v=20" defer></script>
 </body>
 </html>

@@ -4,183 +4,209 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Nettsnekkeren — Løft merkevaren din</title>
-  <meta name="description" content="Førstevalget for bedrifter som vil henge med på teknologien. Vi bygger nettsider, KI-løsninger, apper og kurs — fra bunnen." />
+  <meta name="description" content="Vi lager skreddersydde nettsider for bedrifter. Gratis utkast innen én uke, og du betaler først når du er fornøyd. Klar for Google og KI-agenter." />
+  <link rel="canonical" href="https://nettsnekkeren.no/" />
+  <meta name="theme-color" content="#b7d4f5" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="nb_NO" />
+  <meta property="og:title" content="Nettsnekkeren — Løft merkevaren din" />
+  <meta property="og:description" content="Skreddersydde nettsider for bedrifter. Gratis utkast innen én uke, og du betaler først når du er fornøyd." />
+  <meta property="og:url" content="https://nettsnekkeren.no/" />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css" />
+  <script>document.documentElement.classList.add("js");</script>
+  <link rel="preload" href="fonts/oswald-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="css/style.css?v=20" />
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Nettsnekkeren",
+    "url": "https://nettsnekkeren.no/",
+    "slogan": "Løft merkevaren din",
+    "description": "Nettsnekkeren lager skreddersydde nettsider for bedrifter i Norge, med teknisk SEO og agentoptimalisering for KI-tjenester som ChatGPT, Gemini og Perplexity. Gratis utkast innen én uke, og betaling først når kunden er fornøyd.",
+    "telephone": "+4746783148",
+    "email": "post@nettsnekkeren.no",
+    "areaServed": { "@type": "Country", "name": "Norge" },
+    "identifier": { "@type": "PropertyValue", "propertyID": "Organisasjonsnummer", "value": "937754868" },
+    "knowsAbout": ["Webdesign", "Nettsideutvikling", "Søkemotoroptimalisering", "Agentoptimalisering", "Sanity", "Strukturerte data", "llms.txt"]
+  }
+  </script>
 </head>
 <body>
-  <!-- ===== PRELOADER ===== -->
-  <div class="preloader" id="preloader">
-    <div class="preloader__inner">
-      <span class="preloader__label">NETTSNEKKEREN</span>
-      <span class="preloader__pct" id="preloaderPct">0%</span>
-    </div>
-    <div class="preloader__bar"><span id="preloaderBar"></span></div>
-  </div>
+  <canvas id="dots" aria-hidden="true"></canvas>
 
-  <!-- ===== WebGL canvas ===== -->
-  <canvas id="gl"></canvas>
-
-  <!-- ===== NAV ===== -->
-  <header class="nav" id="nav">
-    <a href="#hero" class="logo" data-scroll-to="hero">Nettsnekkeren</a>
-    <div class="nav__right">
-      <a href="#kontakt" class="nav__talk" data-scroll-to="kontakt">Kontakt oss</a>
-      <button class="nav__lang">No</button>
-      <button class="nav__burger" id="navBurger" aria-label="Meny"><span></span><span></span><span></span></button>
-    </div>
+  <header class="nav" data-theme="light">
+    <a href="/" class="brand" aria-label="Nettsnekkeren, til forsiden">Nettsnekkeren<i></i></a>
+    <nav class="nav__links" aria-label="Hovedmeny">
+      <a href="#prosjekter">Prosjekter</a>
+      <a href="nettsider.html" class="nav__keep">Nettsider</a>
+      <a href="#agent">Agentoptimalisering</a>
+    </nav>
+    <a href="#utkast" class="nav__cta">Få gratis utkast</a>
   </header>
 
-  <!-- ===== FULLSCREEN MENU ===== -->
-  <nav class="menu" id="menu" aria-hidden="true">
-    <ul>
-      <li><a href="#hero" data-scroll-to="hero"><span>01</span> Hjem</a></li>
-      <li><a href="#tjenester" data-scroll-to="tjenester"><span>02</span> Tjenester</a></li>
-      <li><a href="#ai" data-scroll-to="ai"><span>03</span> Klar for KI</a></li>
-      <li><a href="#team" data-scroll-to="team"><span>04</span> Team</a></li>
-      <li><a href="#visjon" data-scroll-to="visjon"><span>05</span> Visjon</a></li>
-      <li><a href="#kontakt" data-scroll-to="kontakt"><span>06</span> Kontakt</a></li>
-    </ul>
-  </nav>
-
-  <main id="content">
-
-    <!-- HERO -->
-    <section class="panel hero" id="hero">
-      <div class="hero__inner">
-        <h1 class="display" data-reveal>
-          <span class="outline">LØFT</span>
-          <span>MERKE&shy;VAREN</span>
-          <span>DIN</span>
-        </h1>
-        <p class="hero__tag" data-reveal>
-          Førstevalget for bedrifter som vil henge med på teknologien. Vi bygger
-          nettsider, KI-løsninger, apper og kurs.
-        </p>
-        <p class="hero__scroll" data-reveal>Bla for å utforske <span class="arrow">↓</span></p>
+  <main>
+    <!-- Bakken: morgenhimmel, fjell, skog og hytta -->
+    <section class="hero" data-bg="sky" data-landscape id="top">
+      <div class="wrap">
+        <p class="label" data-reveal>Førstevalget for bedrifter som vil henge med på teknologien</p>
+        <h1 class="hero__title" aria-label="Løft merkevaren din"><span class="outline">Løft</span><span>merkevaren</span><span>din</span></h1>
+        <div class="hero__row">
+          <p class="lead" data-reveal="2">Vi designer og koder skreddersydde nettsider for bedrifter som vil ligge et steg foran, synlige i Google og klare for KI-agenter.</p>
+          <div class="btns" data-reveal="3">
+            <a href="#utkast" class="btn">Få gratis utkast <i>→</i></a>
+            <a href="#prosjekter" class="btn btn--line">Se prosjekter</a>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- STATEMENT -->
-    <section class="panel statement" id="statement">
-      <p class="statement__text" data-split>
-        Vi forener design, teknologi og KI for å bygge nettsider, apper og
-        verktøy som flytter bedriften din fremover.
-      </p>
-    </section>
-
-    <!-- TJENESTER (status-kort: live vs kommer snart) -->
-    <section class="panel expertise" id="tjenester">
-      <h2 class="display display--lg expertise__title" data-reveal><span class="outline">HVA</span> VI GJØR</h2>
-      <div class="expertise__grid">
-        <a class="col col--live" href="nettsider.html" data-reveal>
-          <h3>Web</h3>
-          <ul>
-            <li>Hjemmeside</li>
-            <li>Landingsside</li>
-            <li>Nettbutikk</li>
+    <!-- Over skyene: alle nettsidene vi har laget, samtidig. Scroller du videre, smuldrer de opp i stjernestøv
+         øverst på skjermen, og anmeldelsene fra kundene scroller inn under. -->
+    <section class="work" data-bg="high" data-showcase id="prosjekter" aria-labelledby="work-h">
+      <div class="work__stage">
+        <div class="wrap work__grid">
+          <div class="work__copy stack">
+            <h2 class="h2 work__h" id="work-h" data-reveal>Vi lager skreddersydde nettsider for bedrifter.</h2>
+            <p class="lead">Ingen maler og ingen Wix. Vi designer og koder hver side fra bunnen, for akkurat den bedriften.</p>
+          </div>
+          <ul class="work__list" aria-label="Nettsider vi har laget">
+          <li class="work__item" data-site>
+            <a class="work__link" href="https://murmesterhenriksen.no" target="_blank" rel="noopener">
+              <span class="site">
+                <span class="site__bar"><i></i><i></i><i></i><span class="site__url">murmesterhenriksen.no</span></span>
+                <img src="assets/portfolio/murmester-1280.webp" srcset="assets/portfolio/murmester-720.webp 720w, assets/portfolio/murmester-1280.webp 1280w" sizes="(max-width: 900px) 46vw, 30vw" alt="Forsiden til Murmester Henriksen" width="1280" height="800" loading="lazy" fetchpriority="low" decoding="async" />
+              </span>
+              <span class="work__meta"><span class="work__name">Murmester Henriksen<span class="work__go" aria-hidden="true"> ↗</span></span><span class="work__type">Kunde</span></span>
+            </a>
+          </li>
+          <li class="work__item" data-site>
+            <a class="work__link" href="https://alogistikk.no" target="_blank" rel="noopener">
+              <span class="site">
+                <span class="site__bar"><i></i><i></i><i></i><span class="site__url">alogistikk.no</span></span>
+                <img src="assets/portfolio/alogistikk-1280.webp" srcset="assets/portfolio/alogistikk-720.webp 720w, assets/portfolio/alogistikk-1280.webp 1280w" sizes="(max-width: 900px) 46vw, 30vw" alt="Forsiden til Akershus Logistikk" width="1280" height="800" loading="lazy" fetchpriority="low" decoding="async" />
+              </span>
+              <span class="work__meta"><span class="work__name">Akershus Logistikk<span class="work__go" aria-hidden="true"> ↗</span></span><span class="work__type">Kunde</span></span>
+            </a>
+          </li>
+          <li class="work__item" data-site>
+            <a class="work__link" href="https://kortvarsel.no" target="_blank" rel="noopener">
+              <span class="site">
+                <span class="site__bar"><i></i><i></i><i></i><span class="site__url">kortvarsel.no</span></span>
+                <img src="assets/portfolio/kortvarsel-1280.webp" srcset="assets/portfolio/kortvarsel-720.webp 720w, assets/portfolio/kortvarsel-1280.webp 1280w" sizes="(max-width: 900px) 46vw, 30vw" alt="Forsiden til Kortvarsel" width="1280" height="800" loading="lazy" fetchpriority="low" decoding="async" />
+              </span>
+              <span class="work__meta"><span class="work__name">Kortvarsel<span class="work__go" aria-hidden="true"> ↗</span></span><span class="work__type">Eget produkt</span></span>
+            </a>
+          </li>
+          <li class="work__item" data-site>
+            <a class="work__link" href="https://cubeway.pages.dev/" target="_blank" rel="noopener">
+              <span class="site">
+                <span class="site__bar"><i></i><i></i><i></i><span class="site__url">cubeway.pages.dev</span></span>
+                <img src="assets/portfolio/cubeway-1280.webp" srcset="assets/portfolio/cubeway-720.webp 720w, assets/portfolio/cubeway-1280.webp 1280w" sizes="(max-width: 900px) 46vw, 30vw" alt="Forsiden til Cubeway" width="1280" height="800" loading="lazy" fetchpriority="low" decoding="async" />
+              </span>
+              <span class="work__meta"><span class="work__name">Cubeway<span class="work__go" aria-hidden="true"> ↗</span></span><span class="work__type">Eget prosjekt</span></span>
+            </a>
+          </li>
           </ul>
-          <span class="col__cta">Se hva vi tilbyr <i>→</i></span>
-        </a>
-        <div class="col col--soon">
-          <span class="col__status">Kommer snart</span>
-          <h3>KI</h3>
-          <ul>
-            <li>KI-løsninger</li>
-            <li>Agents</li>
-            <li>Automatisering</li>
-          </ul>
-        </div>
-        <div class="col col--soon">
-          <span class="col__status">Under utvikling</span>
-          <h3>Apper</h3>
-          <ul>
-            <li>Mobil-apper</li>
-            <li>Web-apper</li>
-            <li>Prototyper</li>
-          </ul>
-        </div>
-        <div class="col col--soon">
-          <span class="col__status">Kommer snart</span>
-          <h3>Mer</h3>
-          <ul>
-            <li>Kurs</li>
-            <li>Rådgivning</li>
-            <li>Drift &amp; vedlikehold</li>
-          </ul>
+          <div class="work__reviews" data-reviews>
+            <a class="gr__head" data-reveal href="https://www.google.com/search?q=Nettsnekkeren" target="_blank" rel="noopener">
+              <svg class="gr__g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg>
+              <span class="gr__score">5,0</span>
+              <span class="gr__stars" role="img" aria-label="5 av 5 stjerner">★★★★★</span>
+              <span class="gr__src">Google-anmeldelser <span aria-hidden="true">↗</span></span>
+            </a>
+            <figure class="gr" data-reveal="2">
+              <div class="gr__top">
+                <span class="gr__av" style="--av:#7e57c2" aria-hidden="true">V</span>
+                <span class="gr__who"><b>Vincent H</b><small>4 anmeldelser</small></span>
+                <svg class="gr__g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg>
+              </div>
+              <div class="gr__stars" role="img" aria-label="5 av 5 stjerner">★★★★★</div>
+              <blockquote><p>Fantastisk service og resultat. Dette er en kar som står på og leverer. Min bedrift er veldig fornøyd med resultatet!</p></blockquote>
+            </figure>
+            <figure class="gr" data-reveal="3">
+              <div class="gr__top">
+                <span class="gr__av" style="--av:#00897b" aria-hidden="true">A</span>
+                <span class="gr__who"><b>Asem Iqbal</b><small>6 anmeldelser · 3 bilder</small></span>
+                <svg class="gr__g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg>
+              </div>
+              <div class="gr__stars" role="img" aria-label="5 av 5 stjerner">★★★★★</div>
+              <blockquote><p>Veldig enkel og hyggelig selskap å ha med å gjøre. Sivert har levert topp og vært utmerket å ha dialog med. Anbefales!</p></blockquote>
+            </figure>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- KLAR FOR KI -->
-    <section class="panel ai-panel" id="ai">
-      <div class="ai__inner">
-        <h2 class="display display--lg" data-reveal><span class="outline">HENG MED</span><br />PÅ FREMTIDEN</h2>
-        <p class="lead" data-reveal>
-          KI endrer hvordan bedrifter jobber. Vi gjør teknologien
-          <em>tilgjengelig og lønnsom</em> for deg.
-        </p>
-        <div class="ai__points">
-          <div class="ai__point" data-reveal><span>01</span><p>Vi kartlegger hvor KI faktisk gir verdi for deg.</p></div>
-          <div class="ai__point" data-reveal><span>02</span><p>Vi bygger løsningene og kobler dem sammen.</p></div>
-          <div class="ai__point" data-reveal><span>03</span><p>Vi lærer teamet ditt å bruke dem.</p></div>
+    <!-- Verdensrommet: stjernestøvet samles til kloden med KI-agentene. Figuren står fast og virvles om til raketten. -->
+    <section class="scene" data-bg="night" data-fixed id="agent" aria-labelledby="agent-h">
+      <div class="wrap scene__grid">
+        <div class="stack">
+          <p class="label" data-reveal>Agentklar</p>
+          <h2 class="h2" id="agent-h" data-reveal>Bygget for mennesker og maskiner.</h2>
+          <p class="lead" data-scrub>Kundene spør ikke lenger bare Google. De spør ChatGPT, Gemini og Perplexity, og snart gjør KI-agenter jobben for dem. Vi strukturerer siden så maskinene forstår hva dere tilbyr, og anbefaler dere.</p>
+          <ul class="specs" data-reveal="3"><li>Strukturerte data</li><li>llms.txt</li><li>Åpent for KI-crawlere</li><li>Svar agenter kan sitere</li></ul>
+        </div>
+        <div class="figure figure--tall" data-dots="agents" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <!-- Fornøydgaranti: raketten skytes opp når du scroller videre -->
+    <section class="scene scene--launch" data-bg="night" data-hold="late" data-fixed aria-labelledby="garanti-h">
+      <div class="wrap scene__grid">
+        <div class="stack">
+          <p class="label" data-reveal>100 % fornøydgaranti</p>
+          <h2 class="h2" id="garanti-h" data-reveal>Du betaler først når du er fornøyd.</h2>
+          <p class="lead" data-scrub>Vi justerer til dere er helt fornøyde med resultatet. Først da går siden live, og først da betaler dere. Ingen forskudd.</p>
+          <ul class="specs" data-reveal="3"><li>Ingen forskudd</li><li>Betal ved lansering</li><li>Justeringer til dere er fornøyde</li></ul>
+        </div>
+        <div class="figure figure--tall" data-dots="rocket" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <!-- Teknologien: raketten blir til en galakse av stjernestøv i bakgrunnen -->
+    <section class="block block--galaxy" data-bg="night" data-fixed aria-labelledby="tech-h">
+      <div class="block__sky" data-dots="galaxy" aria-hidden="true"></div>
+      <div class="wrap">
+        <div class="block__head">
+          <div class="stack">
+            <h2 class="h2" id="tech-h" data-reveal>Rask, synlig og lett å oppdatere.</h2>
+          </div>
+        </div>
+        <ul class="tech">
+          <li data-reveal><b>Moderne kode</b><p>Siden kodes fra bunnen i moderne teknologi, uten tunge maler og tillegg. Den laster raskt, er trygg og er lett å bygge videre på.</p></li>
+          <li data-reveal="2"><b>100/100</b><p>Alle nettsidene vi har levert til kunder, har 100/100 i SEO i Google Lighthouse. Teknisk SEO er bygget inn fra første linje, så Google forstår hva dere gjør og hvor dere holder til.</p></li>
+          <li data-reveal="3"><b>Sanity</b><p>Vil dere oppdatere tekst og bilder selv? Vi setter opp redigering i Sanity, så dere slipper å kunne kode.</p><small>Tilvalg</small></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Gratis utkast: hovedhandlingen. Overskriften skrives frem i prikker blant stjernene. -->
+    <section class="utkast" data-bg="night" id="utkast" aria-labelledby="utkast-h">
+      <div class="wrap">
+        <h2 class="dotword utkast__dots" id="utkast-h" data-dots="text" data-text="FÅ ET GRATIS UTKAST." data-text-small="FÅ ET GRATIS|UTKAST." data-accent="." data-align="center">Få et gratis utkast.</h2>
+        <p class="lead utkast__lead" data-scrub>Fortell oss om bedriften, så lager vi en klikkbar demo av forsiden deres innen én uke. Helt gratis og uforpliktende.</p>
+        <a class="mail-big" href="mailto:post@nettsnekkeren.no?subject=Gratis%20utkast" data-reveal>post@nettsnekkeren.no</a>
+        <div class="utkast__row" data-reveal="2">
+          <a class="phone-big" href="tel:+4746783148">+47 467 83 148</a>
+          <a class="utkast__sms" href="sms:+4746783148">Send SMS →</a>
         </div>
       </div>
-    </section>
-
-    <!-- TEAM -->
-    <section class="panel team" id="team">
-      <div class="team__inner">
-        <h2 class="display display--lg" data-reveal>VÅRT TEAM</h2>
-        <div class="team__grid team__grid--duo">
-          <div class="member" data-reveal><span class="member__name">Sivert Gjulem Lund</span></div>
-          <div class="member" data-reveal><span class="member__name">Andreas Barbo</span></div>
-        </div>
+      <div class="wrap">
+        <footer class="footer">
+          <span>© 2026 Nettsnekkeren · Org.nr 937 754 868</span>
+          <span><a href="nettsider.html">Nettsider</a> · <a href="mailto:post@nettsnekkeren.no">post@nettsnekkeren.no</a> · <a href="tel:+4746783148">467 83 148</a></span>
+        </footer>
       </div>
     </section>
-
-    <!-- VISJON — the loop (spiral wormhole) that springs into the cosmic web -->
-    <section class="panel vision" id="visjon">
-      <div class="vision__inner">
-        <p class="vision__eyebrow" data-reveal>Vår visjon</p>
-        <p class="vision__text" data-split>
-          KI er her. Heng deg på, eller bli hengende etter.
-        </p>
-      </div>
-    </section>
-
-    <!-- KONTAKT -->
-    <section class="panel contact" id="kontakt">
-      <div class="contact__inner">
-        <p class="contact__pre" data-reveal>la oss jobbe sammen</p>
-        <a href="mailto:post@nettsnekkeren.no" class="contact__mail display" data-reveal>post@nettsnekkeren.no</a>
-        <a href="tel:+4746783148" class="contact__phone" data-reveal>+47 467 83 148</a>
-        <div class="contact__socials" data-reveal>
-          <a href="#">Instagram</a><a href="#">Facebook</a><a href="#">LinkedIn</a>
-        </div>
-      </div>
-      <footer class="footer">
-        <span class="footer__logo">NETTSNEKKEREN</span>
-        <span>© 2026 · Org.nr 937 754 868</span>
-        <span>post@nettsnekkeren.no · +47 467 83 148</span>
-      </footer>
-    </section>
-
   </main>
 
-  <div class="progress" id="progress"><span id="progressBar"></span></div>
-
-  <script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="js/particles.js"></script>
-  <script src="js/main.js"></script>
+  <script src="js/dots.js?v=20" defer></script>
+  <script src="js/site.js?v=20" defer></script>
 </body>
 </html>

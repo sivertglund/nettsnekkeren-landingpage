@@ -1,0 +1,32 @@
+# Nettsnekkeren
+
+> Nettsnekkeren lager skreddersydde nettsider for bedrifter i Norge. Hver side designes og kodes fra bunnen, med teknisk SEO og agentoptimalisering for KI-tjenester som ChatGPT, Gemini og Perplexity. Bedrifter får et gratis utkast (en klikkbar demo av forsiden) innen én uke, og betaler først når siden går live, som skjer når de er helt fornøyde. Ingen forskudd.
+
+- Telefon: +47 467 83 148
+- E-post: post@nettsnekkeren.no
+- Org.nr: 937 754 868
+
+## Tjenester
+
+- Skreddersydde nettsider: designet for bedriften og kodet fra bunnen i moderne teknologi, uten maler.
+- SEO: teknisk SEO fra første linje. Alle nettsidene levert til kunder (murmesterhenriksen.no og alogistikk.no) har 100/100 i SEO i Google Lighthouse.
+- Agentoptimalisering: strukturerte data (schema.org), llms.txt, åpent for KI-crawlere og svar som KI-assistenter kan sitere.
+- Redigering i Sanity (tilvalg): kunden oppdaterer tekst, bilder og nyheter selv.
+- Hosting på Cloudflare. Kunden eier kode, domene og innhold.
+
+## Slik fungerer det
+
+- Gratis utkast: en klikkbar demo av forsiden innen én uke, gratis og uforpliktende.
+- 100 % fornøydgaranti: siden går live først når kunden er fornøyd, og betaling skjer først da.
+
+## Sider
+
+- [Forside](https://nettsnekkeren.no/): Prosjekter, agentoptimalisering, garanti og gratis utkast.
+- [Nettsider](https://nettsnekkeren.no/nettsider.html): Tjenestene i detalj, prosess og vanlige spørsmål.
+
+## Utvalgte prosjekter
+
+- [Murmester Henriksen](https://murmesterhenriksen.no): Kunde. Murer i Vestfold.
+- [Akershus Logistikk](https://alogistikk.no): Kunde. Transport og logistikk.
+- [Kortvarsel](https://kortvarsel.no): Eget produkt. Fyller avbestilte timer automatisk med SMS.
+- [Cubeway](https://cubeway.pages.dev/): Landingsside for en app som lærer deg Rubiks kube.
