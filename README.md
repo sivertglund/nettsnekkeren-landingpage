@@ -8,7 +8,8 @@ Hele forsiden er én oppstigning, og alt scroller fritt:
 2. **Over skyene:** de fire nettsidene vi har laget, i et rutenett. Midt på skjermen smuldrer de opp i stjernestøv én etter én, og Google-anmeldelsene scroller opp der nettsidene var.
 3. **Verdensrommet:** støvet samles til en jordklode med kontinenter, KI-agenter i bane og datapakker inn mot Norge (Agentklar). Kloden står fast på skjermen (desktop) og dreier over i en 3D-rakett (fornøydgaranti).
 4. **Rask, synlig og lett å oppdatere:** raketten løses sakte opp og strømmer ut i en stor spiralgalakse i bakgrunnen.
-5. **Gratis utkast:** «FÅ ET GRATIS UTKAST.» samles av stjernestøv, med stor e-postadresse, telefon og SMS.
+5. **Spørsmål og svar** ligger i samme seksjon, med galaksen i bakgrunnen.
+6. **Gratis utkast:** «FÅ ET GRATIS UTKAST.» samles av stjernestøv, med stor e-postadresse, telefon og SMS.
 
 ## Prikkmotoren (js/dots.js)
 - Hver `<section data-bg="sky|high|blue|night">` er en scene. Himmelens farger glir over hele skjermen mellom dem. `data-landscape` på første seksjon gir landskapet.
@@ -19,8 +20,13 @@ Hele forsiden er én oppstigning, og alt scroller fritt:
 - Musehjulet gir myk scrolling på desktop (`js/site.js`). På mobil og med redusert bevegelse er scrollingen vanlig.
 
 ## Sider
-- `index.html` — forsiden
-- `nettsider.html` — tjenestesiden: én scene per tjeneste, prosess, prosjekter, spørsmål, kontakt
+Adressene er uten `.html` (`cleanUrls` i `vercel.json`), så `/nettsider` serverer `nettsider.html`.
+- `/` (`index.html`) — forsiden, én sammenhengende reise. Menyen hopper bare innad på siden.
+- `/nettsider` — nettsider for bedrifter: tjenestene, prosessen, prosjektene og spørsmål om nettsidene
+- `/synlig-i-chatgpt` — agentoptimalisering: hvordan vi gjør nettsider synlige i ChatGPT, Gemini og Perplexity
+- `/prosjekter/murmester-henriksen` og `/prosjekter/akershus-logistikk` — kundeprosjektene
+
+Undersidene lenkes fra bunnteksten, ikke fra menyen. Nye sider må også legges inn i `sitemap.xml` og `llms.txt`.
 
 ## Filer
 ```
@@ -29,13 +35,14 @@ js/dots.js        # himmel, landskap og stjernestøv
 js/site.js        # myk scrolling, meny, inntoning, ingresser som lyser opp ord for ord
 assets/portfolio/ # skjermbilder av nettsidene (WebP til forsiden, JPG til tjenestesiden)
 fonts/            # Oswald, Archivo og Martian Mono (woff2)
-llms.txt, robots.txt, sitemap.xml
+assets/og.jpg     # delingsbildet (1200×630) for Facebook, LinkedIn og SMS
+llms.txt, robots.txt, sitemap.xml, vercel.json
 ```
 
-Skript og stilark lenkes med et versjonsnummer (`?v=20`). Øk det når de endres, så besøkende får den nye versjonen.
+Skript og stilark lenkes med et versjonsnummer (`?v=22`). Øk det når de endres, så besøkende får den nye versjonen.
 
 ## Kjøre lokalt
-`python3 -m http.server 8765` og åpne http://127.0.0.1:8765
+`python3 -m http.server 8765` og åpne http://127.0.0.1:8765 (bruk `/nettsider.html` osv. lokalt, siden den enkle serveren ikke kjenner de rene adressene)
 
 ## Gå tilbake til den forrige siden
 Siden før denne omleggingen er tagget `original-side` i Git. I Vercel kan du også velge en tidligere publisering og trykke «Instant Rollback».

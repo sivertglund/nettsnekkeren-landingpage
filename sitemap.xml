@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://nettsnekkeren.no/</loc></url>
-  <url><loc>https://nettsnekkeren.no/nettsider.html</loc></url>
+  <url><loc>https://nettsnekkeren.no/</loc><lastmod>2026-09-30</lastmod></url>
+  <url><loc>https://nettsnekkeren.no/nettsider</loc><lastmod>2026-09-30</lastmod></url>
+  <url><loc>https://nettsnekkeren.no/synlig-i-chatgpt</loc><lastmod>2026-09-30</lastmod></url>
+  <url><loc>https://nettsnekkeren.no/prosjekter/murmester-henriksen</loc><lastmod>2026-09-30</lastmod></url>
+  <url><loc>https://nettsnekkeren.no/prosjekter/akershus-logistikk</loc><lastmod>2026-09-30</lastmod></url>
 </urlset>

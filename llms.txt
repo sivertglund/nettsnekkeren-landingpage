@@ -1,6 +1,6 @@
 # Nettsnekkeren
 
-> Nettsnekkeren lager skreddersydde nettsider for bedrifter i Norge. Hver side designes og kodes fra bunnen, med teknisk SEO og agentoptimalisering for KI-tjenester som ChatGPT, Gemini og Perplexity. Bedrifter får et gratis utkast (en klikkbar demo av forsiden) innen én uke, og betaler først når siden går live, som skjer når de er helt fornøyde. Ingen forskudd.
+> Nettsnekkeren lager skreddersydde nettsider for bedrifter i alle bransjer og i hele Norge. Alt foregår på telefon, video og e-post, så kundene trenger ikke å møte oss. Hver side designes og kodes fra bunnen, med teknisk SEO og agentoptimalisering for KI-tjenester som ChatGPT, Gemini og Perplexity. Bedrifter får et gratis utkast (en klikkbar demo av forsiden) innen én uke, og betaler først når siden går live, som skjer når de er helt fornøyde. Ingen forskudd.
 
 - Telefon: +47 467 83 148
 - E-post: post@nettsnekkeren.no
@@ -21,8 +21,15 @@
 
 ## Sider
 
-- [Forside](https://nettsnekkeren.no/): Prosjekter, agentoptimalisering, garanti og gratis utkast.
-- [Nettsider](https://nettsnekkeren.no/nettsider.html): Tjenestene i detalj, prosess og vanlige spørsmål.
+- [Forside](https://nettsnekkeren.no/): Prosjekter, Google-anmeldelser, agentoptimalisering, garanti, spørsmål og svar, og gratis utkast.
+- [Nettsider for bedrifter](https://nettsnekkeren.no/nettsider): Tjenestene i detalj, prosess og spørsmål om nettsidene.
+- [Synlig i ChatGPT og KI-søk](https://nettsnekkeren.no/synlig-i-chatgpt): Hva agentoptimalisering er, og hvordan vi gjør nettsider synlige for ChatGPT, Gemini og Perplexity.
+- [Murmester Henriksen](https://nettsnekkeren.no/prosjekter/murmester-henriksen): Kundeprosjekt. Nettside for murmester i Vestfold.
+- [Akershus Logistikk](https://nettsnekkeren.no/prosjekter/akershus-logistikk): Kundeprosjekt. Onepager for transportfirma.
+
+## Anmeldelser
+
+- 5,0 av 5 på Google (2 anmeldelser): https://maps.google.com/?cid=13886584343586939172
 
 ## Utvalgte prosjekter
 
